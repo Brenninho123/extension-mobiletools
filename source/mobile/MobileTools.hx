@@ -1,15 +1,21 @@
 package mobile;
 
+import lime.system.System;
+
 #if android
 import lime.system.JNI;
 #end
 
 #if ios
-@:cppFileCode('#import <UIKit/UIKit.h>')
+@:cppFileCode('#include "MobileTools.mm"')
 #end
 
 class MobileTools
 {
+    // =========================
+    // PUBLIC API
+    // =========================
+
     /**
      * Vibrar o dispositivo
      */
@@ -25,16 +31,28 @@ class MobileTools
     }
 
     /**
-     * Abrir URL no navegador
+     * Abrir URL
      */
     public static function openURL(url:String):Void
     {
         #if android
         _androidOpenURL(url);
         #elseif ios
-        lime.system.System.openURL(url);
+        _iosOpenURL(url);
         #else
-        lime.system.System.openURL(url);
+        System.openURL(url);
+        #end
+    }
+
+    /**
+     * Mostrar Toast (Android only)
+     */
+    public static function showToast(message:String):Void
+    {
+        #if android
+        _androidShowToast(message);
+        #else
+        trace("Toast only available on Android.");
         #end
     }
 
@@ -43,6 +61,7 @@ class MobileTools
     // =========================
 
     #if android
+
     private static var _androidVibrate = JNI.createStaticMethod(
         "com/mobiletools/MobileTools",
         "vibrate",
@@ -54,16 +73,26 @@ class MobileTools
         "openURL",
         "(Ljava/lang/String;)V"
     );
+
+    private static var _androidShowToast = JNI.createStaticMethod(
+        "com/mobiletools/MobileTools",
+        "showToast",
+        "(Ljava/lang/String;)V"
+    );
+
     #end
 
     // =========================
-    // IOS NATIVE
+    // IOS BRIDGE
     // =========================
 
     #if ios
-    @:functionCode('
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    ')
-    private static function _iosVibrate():Void {}
+
+    @:native("ios_vibrate")
+    private static function _iosVibrate():Void;
+
+    @:native("ios_open_url")
+    private static function _iosOpenURL(url:String):Void;
+
     #end
 }
