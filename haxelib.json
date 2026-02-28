@@ -1,0 +1,24 @@
+{
+  "name": "extension-mobiletools",
+  "url": "https://github.com/Brenninho123/extension-mobiletools",
+  "license": "MIT",
+  "tags": [
+    "mobile",
+    "android",
+    "ios",
+    "lime",
+    "openfl",
+    "extension",
+    "tools"
+  ],
+  "description": "Mobile utilities extension for Haxe projects (Android/iOS).",
+  "version": "1.0.0",
+  "releasenote": "Initial release.",
+  "contributors": [
+    "Brenninho123"
+  ],
+  "dependencies": {
+    "lime": "",
+    "openfl": ""
+  }
+}
