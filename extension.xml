@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension name="extension-mobiletools">
+
+    <!-- Haxe source path -->
+    <source path="src" />
+
+    <!-- ========================= -->
+    <!-- ANDROID CONFIGURATION     -->
+    <!-- ========================= -->
+    <section if="android">
+        
+        <!-- Java source folder -->
+        <java path="android/src" />
+
+        <!-- Android Manifest additions -->
+        <android>
+            <manifestAdditions>
+                <![CDATA[
+                <uses-permission android:name="android.permission.VIBRATE" />
+                <uses-permission android:name="android.permission.INTERNET" />
+                ]]>
+            </manifestAdditions>
+        </android>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- IOS CONFIGURATION         -->
+    <!-- ========================= -->
+    <section if="ios">
+
+        <!-- Objective-C / Swift source folder -->
+        <source path="ios/src" />
+
+        <ios>
+            <framework name="UIKit" />
+            <framework name="Foundation" />
+        </ios>
+
+    </section>
+
+</extension>
